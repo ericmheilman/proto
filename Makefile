@@ -1,13 +1,19 @@
 rwildcard = $(strip $(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d)))
-PROTOS := $(strip $(call rwildcard,src,*.proto))
-C_SRCS := $(patsubst src/%.proto,build/%.c, $(PROTOS))
-C_HEADERS := $(patsubst src/%.proto,build/%.h, $(PROTOS))
 
+# recursively find all the .proto
+PROTOS := $(strip $(call rwildcard,src,*.proto))
+
+# create C_SRCS which will be our build targets
+C_SRCS := $(patsubst src/%.proto,build/%.c, $(PROTOS))
+
+# create list of all directories needed for build output
 DIRS := build $(patsubst src%,build%,$(dir $(C_SRCS)))
 
-$(info $(DIRS))
-
 .PHONY: build clean dirs
+
+PROTOC := protoc --plugin=protoc-gen-nanopb=/home/louis/nanopb/generator/protoc-gen-nanopb
+OUT := --nanopb_out
+
 
 build: $(C_SRCS)
 
@@ -18,4 +24,4 @@ clean:
 	rm -rf build
 
 build/%.c: src/%.proto dirs
-	protoc --c_out=$(@D) $(<F) --proto_path $(<D)
+	$(PROTOC) $(OUT)=$(@D) $(<F) --proto_path $(<D)

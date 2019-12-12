@@ -47,7 +47,7 @@ message RadioResp {
     oneof kind {
         RadioTxResp tx = 2;
         RadioRxPacket rx_packet = 3;
-        bytes parse_err = 4;
+//        bytes parse_err = 4;
     }
 }
 

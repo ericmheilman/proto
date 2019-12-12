@@ -22,7 +22,7 @@ message LongFiResp {
     oneof kind {
         LongFiTxStatus tx_status = 2;
         LongFiRxPacket rx = 3;
-        bytes parse_err = 4;
+//        bytes parse_err = 4;
     }
     bytes miner_name = 5;
 }
