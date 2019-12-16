@@ -11,7 +11,7 @@ DIRS := build $(patsubst src%,build%,$(dir $(C_SRCS)))
 
 .PHONY: build clean dirs
 
-PROTOC := protoc --plugin=protoc-gen-nanopb=/home/louis/nanopb/generator/protoc-gen-nanopb
+PROTOC := protoc -I$(HOME)/nanopb/generator/proto --plugin=protoc-gen-nanopb=$(HOME)/nanopb/generator/protoc-gen-nanopb 
 OUT := --nanopb_out
 
 
