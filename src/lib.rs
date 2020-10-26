@@ -141,7 +141,9 @@ mod multikeys {
         for (i, key) in keys.iter().enumerate() {
             let mut new_key = key.clone();
             new_key.insert(0, 0);
+            s.push('\"');
             s.push_str(&bs58::encode(&new_key).with_check().into_string());
+            s.push('\"');
             if i != keys.len() - 1 {
                 s.push_str(", ");
             }
@@ -173,6 +175,39 @@ mod multikeys {
             }
         }
         deserializer.deserialize_any(KeyParser {})
+    }
+}
+
+mod str_list {
+    use serde::{
+        Deserializer, Serializer,
+    };
+
+    pub fn serialize<S>(keys: &[Vec<u8>], serializer: S) -> Result<S::Ok, S::Error>
+        where
+            S: Serializer,
+    {
+        let mut s = String::new();
+        s.push('[');
+        for (i, key) in keys.iter().enumerate() {
+            // TODO: should find how to map into err
+            s.push('\"');
+            s.push_str(&std::str::from_utf8(key).unwrap());
+            s.push('\"');
+            if i != keys.len() - 1 {
+                s.push_str(", ");
+            }
+        }
+        s.push(']');
+        serializer.serialize_str(&s)
+    }
+
+    // warning: this part isn't really tested
+    pub fn deserialize<'de, D>(_deserializer: D) -> Result<Vec<Vec<u8>>, D::Error>
+        where
+            D: Deserializer<'de>,
+    {
+        panic!("var::deserialize untested")
     }
 }
 
