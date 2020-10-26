@@ -124,6 +124,58 @@ pub mod base58 {
     }
 }
 
+mod multikeys {
+    extern crate bs58;
+    use serde::{
+        de::{SeqAccess, Visitor},
+        Deserializer, Serializer,
+    };
+    use std::fmt;
+
+    pub fn serialize<S>(keys: &[Vec<u8>], serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut s = String::new();
+        s.push('[');
+        for (i, key) in keys.iter().enumerate() {
+            let mut new_key = key.clone();
+            new_key.insert(0, 0);
+            s.push_str(&bs58::encode(&new_key).with_check().into_string());
+            if i != keys.len() - 1 {
+                s.push_str(", ");
+            }
+        }
+        s.push(']');
+        serializer.serialize_str(&s)
+    }
+
+    // warning: this part isn't really tested
+    pub fn deserialize<'de, D>(deserializer: D) -> Result<Vec<Vec<u8>>, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct KeyParser;
+        impl<'de> Visitor<'de> for KeyParser {
+            type Value = Vec<Vec<u8>>;
+
+            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+                formatter.write_str("Vec<Vec<u8>>")
+            }
+
+            fn visit_seq<A: SeqAccess<'de>>(self, mut seq: A) -> Result<Self::Value, A::Error> {
+                let mut ret = Vec::new();
+
+                while let Some(s) = seq.next_element::<String>()? {
+                    ret.push(bs58::decode(s).into_vec().unwrap());
+                }
+                Ok(ret)
+            }
+        }
+        deserializer.deserialize_any(KeyParser {})
+    }
+}
+
 mod base64 {
     extern crate base64;
     use serde::{de, Deserialize, Deserializer, Serializer};
