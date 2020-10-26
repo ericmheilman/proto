@@ -141,9 +141,9 @@ mod multikeys {
         for (i, key) in keys.iter().enumerate() {
             let mut new_key = key.clone();
             new_key.insert(0, 0);
-            s.push('\"');
+            s.push('"');
             s.push_str(&bs58::encode(&new_key).with_check().into_string());
-            s.push('\"');
+            s.push('"');
             if i != keys.len() - 1 {
                 s.push_str(", ");
             }
@@ -191,9 +191,9 @@ mod str_list {
         s.push('[');
         for (i, key) in keys.iter().enumerate() {
             // TODO: should find how to map into err
-            s.push('\"');
+            s.push('"');
             s.push_str(&std::str::from_utf8(key).unwrap());
-            s.push('\"');
+            s.push('"');
             if i != keys.len() - 1 {
                 s.push_str(", ");
             }
