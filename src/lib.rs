@@ -211,6 +211,38 @@ mod str_list {
     }
 }
 
+mod base64_url_list {
+    extern crate base64;
+    use serde::{Deserializer, Serializer};
+
+
+    pub fn serialize<S>(keys: &[Vec<u8>], serializer: S) -> Result<S::Ok, S::Error>
+        where
+            S: Serializer,
+    {
+        let mut s = String::new();
+        s.push('[');
+        for (i, bytes) in keys.iter().enumerate() {
+            // TODO: should find how to map into err
+            s.push('"');
+            s.push_str(&base64::encode_config(bytes, base64::URL_SAFE));
+            s.push('"');
+            if i != keys.len() - 1 {
+                s.push_str(", ");
+            }
+        }
+        s.push(']');
+        serializer.serialize_str(&s)
+    }
+
+    pub fn deserialize<'de, D>(_deserializer: D) -> Result<Vec<Vec<u8>>, D::Error>
+        where
+            D: Deserializer<'de>,
+    {
+        panic!("base64_url_list deserialize unimplemented")
+    }
+}
+
 mod base64 {
     extern crate base64;
     use serde::{de, Deserialize, Deserializer, Serializer};
@@ -239,7 +271,12 @@ mod base64_url {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&base64::encode_config(bytes, base64::URL_SAFE))
+        if bytes.len() == 0 {
+            serializer.serialize_str("null")
+        } else {
+            serializer.serialize_str(&base64::encode_config(bytes, base64::URL_SAFE))
+
+        }
     }
 
     pub fn deserialize<'de, D>(deserializer: D) -> Result<Vec<u8>, D::Error>
