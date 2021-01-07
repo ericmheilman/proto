@@ -5,5 +5,5 @@ package helium;
 import "blockchain_state_channel_v1.proto";
 
 service state_channel {
-  rpc msg(stream blockchain_state_channel_message_v1) returns(blockchain_state_channel_message_v1 routing_response);
+  rpc msg(stream blockchain_state_channel_message_v1) returns(blockchain_state_channel_message_v1);
 }
