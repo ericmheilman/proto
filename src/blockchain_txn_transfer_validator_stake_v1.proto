@@ -1,0 +1,8 @@
+syntax = "proto3";
+package helium;
+
+message blockchain_txn_transfer_validator_stake_v1 {
+    bytes old_addr = 1;
+    bytes new_addr = 2;
+    bytes owner = 3;
+}
