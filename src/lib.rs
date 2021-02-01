@@ -271,7 +271,7 @@ mod base64_url {
     where
         S: Serializer,
     {
-        if bytes.len() == 0 {
+        if bytes.is_empty() {
             serializer.serialize_str("null")
         } else {
             serializer.serialize_str(&base64::encode_config(bytes, base64::URL_SAFE))
