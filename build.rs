@@ -49,6 +49,8 @@ fn main() -> Result<()> {
             .field_attribute("gateway", "#[serde(with = \"crate::base58\")]")
             .field_attribute("challenger_owner", "#[serde(with = \"crate::base58\")]")
             .field_attribute("challengee", "#[serde(with = \"crate::base58\")]")
+            .field_attribute("buyer", "#[serde(with = \"crate::base58\")]")
+            .field_attribute("seller", "#[serde(with = \"crate::base58\")]")
             .field_attribute("challenger", "#[serde(with = \"crate::base58\")]")
             .field_attribute("multi_keys", "#[serde(with = \"crate::multikeys\")]")
             .field_attribute("id", "#[serde(with = \"crate::base64_url\")]")
@@ -103,6 +105,14 @@ fn main() -> Result<()> {
             )
             .field_attribute(
                 "oui_owner_signature",
+                "#[serde(default, with = \"crate::base64_url\")]",
+            )
+            .field_attribute(
+                "buyer_signature",
+                "#[serde(default, with = \"crate::base64_url\")]",
+            )
+            .field_attribute(
+                "seller_signature",
                 "#[serde(default, with = \"crate::base64_url\")]",
             )
             .field_attribute(
