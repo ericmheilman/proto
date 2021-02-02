@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package helium;
+
+import "blockchain_state_channel_v1.proto";
+
+message validator_resp_v1 {
+  uint64 height = 1;
+  bytes signature = 2;
+  oneof msg {
+    validator_sc_is_valid_resp_v1 is_valid_resp = 3;
+    validator_sc_dispute_resp_v1 dispute_resp = 4;
+    validator_sc_follow_resp_v1 follow_resp = 5;
+  }
+}
+
+message validator_sc_is_valid_req_v1 {
+  bytes pub_key = 1;
+  blockchain_state_channel_v1 sc = 2;
+}
+message validator_sc_is_valid_resp_v1 {
+  blockchain_state_channel_v1 sc = 1;
+  bool response = 2;
+}
+
+message validator_sc_dispute_req_v1 {
+    bytes pub_key = 1;
+    blockchain_state_channel_v1 sc = 2;
+}
+message validator_sc_dispute_resp_v1 {
+    blockchain_state_channel_v1 sc = 1;
+}
+
+message validator_sc_follow_req_v1 {
+    blockchain_state_channel_v1 sc = 1;
+}
+message validator_sc_follow_resp_v1 {
+    blockchain_state_channel_v1 sc = 1;
+}
+
+service validator_state_channels {
+  rpc is_valid(validator_sc_is_valid_req_v1) returns (validator_resp_v1);
+  rpc dispute(validator_sc_dispute_req_v1) returns (validator_resp_v1);
+  rpc follow(validator_sc_follow_req_v1) returns (stream validator_resp_v1);
+}
