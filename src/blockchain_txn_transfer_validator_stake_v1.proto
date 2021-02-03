@@ -7,4 +7,5 @@ message blockchain_txn_transfer_validator_stake_v1 {
     bytes owner = 3;
     bytes owner_signature = 4;
     uint64 fee = 5;
+    uint64 nonce = 6;
 }
