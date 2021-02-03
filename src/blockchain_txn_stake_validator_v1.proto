@@ -2,8 +2,10 @@ syntax = "proto3";
 package helium;
 
 message blockchain_txn_stake_validator_v1 {
-    bytes addr = 1;
+    bytes validator = 1;
     bytes owner = 2;
     uint64 stake = 3;
     bytes description = 4;
+    bytes validator_signature = 5;
+    bytes owner_signature = 6;
 }

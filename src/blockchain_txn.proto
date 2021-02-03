@@ -32,10 +32,11 @@ import "blockchain_txn_transfer_hotspot_v1.proto";
 import "blockchain_txn_gen_validator_v1.proto";
 import "blockchain_txn_stake_validator_v1.proto";
 import "blockchain_txn_change_validator_description_v1.proto";
-// import "blockchain_txn_add_validator_stake_v1.proto";
-// import "blockchain_txn_reduce_validator_stake_v1.proto";
 import "blockchain_txn_transfer_validator_stake_v1.proto";
 import "blockchain_txn_unstake_validator_v1.proto";
+import "blockchain_txn_validator_heartbeat_v1.proto";
+// import "blockchain_txn_add_validator_stake_v1.proto";
+// import "blockchain_txn_reduce_validator_stake_v1.proto";
 
 message blockchain_txn {
     oneof txn {
@@ -71,8 +72,9 @@ message blockchain_txn {
         blockchain_txn_change_validator_description_v1 change_description = 30;
         blockchain_txn_transfer_validator_stake_v1 transfer_val_stake = 31;
         blockchain_txn_unstake_validator_v1 unstake_validator = 32;
-        //blockchain_txn_add_validator_stake_v1 add_stake = 33;
-        //blockchain_txn_reduce_validator_stake_v1 reduce_stake = 34;
+        blockchain_txn_validator_heartbeat_v1 val_heartbeat = 33;
+        //blockchain_txn_add_validator_stake_v1 add_stake = 34;
+        //blockchain_txn_reduce_validator_stake_v1 reduce_stake = 35;
     }
 }
 
