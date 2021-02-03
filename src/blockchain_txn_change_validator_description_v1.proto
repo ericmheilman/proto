@@ -6,4 +6,5 @@ message blockchain_txn_change_validator_description_v1 {
     bytes owner = 2;
     bytes description = 3;
     bytes owner_signature = 4;
+    uint64 fee = 5;
 }

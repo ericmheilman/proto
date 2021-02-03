@@ -8,4 +8,5 @@ message blockchain_txn_stake_validator_v1 {
     bytes description = 4;
     bytes validator_signature = 5;
     bytes owner_signature = 6;
+    uint64 fee = 7;
 }
