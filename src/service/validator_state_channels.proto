@@ -39,9 +39,9 @@ message validator_sc_follow_req_v1 {
 message validator_sc_follow_streamed_msg_v1 {
     bytes sc_id = 1;
     enum msg {
-        closable = 0;
-        closing = 1;
-        closed = 2;
+        closable = 2;
+        closing = 3;
+        closed = 4;
     }
 }
 
