@@ -5,6 +5,12 @@ package helium;
 import "blockchain_state_channel_v1.proto";
 import "blockchain_txn_state_channel_close_v1.proto";
 
+enum CloseState {
+    closable = 0;
+    closing = 1;
+    closed = 2;
+}
+
 message validator_resp_v1 {
   uint64 height = 1;
   bytes signature = 2;
@@ -38,11 +44,8 @@ message validator_sc_follow_req_v1 {
 }
 message validator_sc_follow_streamed_msg_v1 {
     bytes sc_id = 1;
-    enum msg {
-        closable = 2;
-        closing = 3;
-        closed = 4;
-    }
+    CloseState close_state = 2;
+
 }
 
 service validator_state_channels {
