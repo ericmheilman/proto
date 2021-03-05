@@ -28,12 +28,13 @@ import "blockchain_txn_payment_v2.proto";
 import "blockchain_txn_price_oracle_v1.proto";
 import "blockchain_txn_gen_price_oracle_v1.proto";
 import "blockchain_txn_transfer_hotspot_v1.proto";
-
+import "blockchain_txn_split_rewards_v1.proto";
 import "blockchain_txn_gen_validator_v1.proto";
 import "blockchain_txn_stake_validator_v1.proto";
 import "blockchain_txn_transfer_validator_stake_v1.proto";
 import "blockchain_txn_unstake_validator_v1.proto";
 import "blockchain_txn_validator_heartbeat_v1.proto";
+
 
 message blockchain_txn {
     oneof txn {
@@ -69,6 +70,7 @@ message blockchain_txn {
         blockchain_txn_transfer_validator_stake_v1 transfer_val_stake = 30;
         blockchain_txn_unstake_validator_v1 unstake_validator = 31;
         blockchain_txn_validator_heartbeat_v1 val_heartbeat = 32;
+        blockchain_txn_split_rewards_v1 split_rewards = 33;
     }
 }
 
