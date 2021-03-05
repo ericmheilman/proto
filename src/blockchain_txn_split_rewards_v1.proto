@@ -12,5 +12,3 @@ message blockchain_txn_split_rewards_v1 {
     uint64 amount_to_seller = 8; // in bones not raw HNT
     uint64 fee = 9;
 }
-~                                                                               
-~                  
