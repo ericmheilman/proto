@@ -1,9 +1,0 @@
-syntax = "proto3";
-package helium;
-
-message blockchain_txn_unstake_validator_v1 {
-  bytes address = 1;
-  bytes owner = 2;
-  bytes owner_signature = 3;
-  uint64 fee = 4;
-}
